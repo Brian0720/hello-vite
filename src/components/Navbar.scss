@@ -1,0 +1,166 @@
+.navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	border-radius: 0;
+	padding-top: 0;
+	padding-bottom: 0;
+	border: 0;
+
+	.app-logo {
+		width: 220px;
+		height: 40px;
+		background-image: url("../sdc-logo.png");
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+
+	.p-menuitem-text {
+		line-height: 30px;
+	}
+
+	.p-menubar-root-list {
+		width: 100%;
+
+		.p-menu-separator {
+			flex: 1;
+		}
+
+		> .p-menuitem > .p-menuitem-link {
+			border-radius: 0;
+			padding: 15px;
+		}
+
+		> .p-menuitem.p-menuitem-active > .p-submenu-list {
+			width: 240px;
+
+			.p-menuitem {
+				background-color: transparent;
+
+				.p-menuitem-link {
+					.p-menuitem-text {
+						line-height: 20px;
+						font-weight: 700;
+					}
+				}
+			}
+		}
+
+		.right-aligned-item .p-submenu-list {
+			right: 0;
+		}
+
+		.p-menuitem-icon.pi-lock {
+			font-size: 12px;
+		}
+	}
+
+	.p-submenu-list {
+		padding: 0;
+		width: 100%;
+
+		.p-panelmenu-panel:not(:first-child) {
+			border-top: 1px solid rgba(255, 255, 255, 0.12);
+		}
+	}
+
+	.p-panelmenu {
+		border: 1px solid rgba(255, 255, 255, 0.12);
+
+		.p-panelmenu-header > a {
+			padding: 0.75rem 0.75rem;
+			border-radius: 0 !important;
+		}
+	}
+
+	.p-panelmenu-panel {
+		.p-panelmenu-header {
+			margin-top: 0;
+
+			> a {
+				.p-menuitem-text {
+					flex: 1;
+					text-align: left;
+				}
+			}
+
+			&.p-highlight > a {
+				background-color: rgba(255, 255, 255, 0.04);
+			}
+		}
+
+		.p-panelmenu-content {
+			.p-submenu-list {
+				.p-menuitem-link {
+					padding-left: 25px;
+				}
+			}
+		}
+	}
+
+	.menuitem-balance {
+		display: flex;
+		border: 1px solid #fff;
+		border-radius: 3px;
+		padding: 5px 8px;
+
+		.p-menuitem-text {
+			font-weight: normal !important;
+			line-height: 1;
+		}
+
+		.menuitem-balance-label {
+			font-weight: 700;
+			margin-right: 5px;
+		}
+	}
+
+	.mobile-toggle-button {
+		.p-submenu-list {
+			.p-panelmenu {
+				.p-panelmenu-content {
+					padding: 0;
+
+					.p-submenu-list {
+						display: block;
+						position: relative;
+						box-shadow: none;
+					}
+				}
+			}
+		}
+
+		> .p-menuitem-link .p-menuitem-icon {
+			margin-right: 0 !important;
+		}
+
+		&.tablet {
+			> .p-menuitem-link .p-submenu-icon {
+				&.pi-angle-down {
+					display: none;
+				}
+			}
+		}
+
+		&.phone {
+			position: static;
+
+			.p-submenu-list {
+				width: 100% !important;
+			}
+
+			&:not(.p-menuitem-active) {
+				.pi-times {
+					display: none;
+				}
+			}
+
+			&.p-menuitem-active {
+				.pi-bars {
+					display: none;
+				}
+			}
+		}
+	}
+}

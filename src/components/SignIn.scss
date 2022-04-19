@@ -1,0 +1,21 @@
+.sign-in {
+	margin-bottom: 15px;
+
+	.p-float-label {
+		margin-top: 15px;
+	}
+
+	.p-button-wrapper {
+		width: 100%;
+		text-align: left;
+		display: inline-block;
+
+		.p-button {
+			margin: 16px 0 0 20px;
+		}
+	}
+
+	.p-float-label > label {
+		left: 2rem;
+	}
+}

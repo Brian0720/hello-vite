@@ -1,11 +1,11 @@
 import { useState } from "react";
 import logo from "./logo.svg";
-import "primereact/resources/themes/lara-light-indigo/theme.css"; //theme
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
 import "./App.css";
 
 import { Button } from "primereact/button";
+import Navbar from "./components/Navbar";
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -42,6 +42,7 @@ function App() {
 					</a>
 				</p>
 			</header>
+			<Navbar />
 		</div>
 	);
 }
