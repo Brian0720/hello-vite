@@ -7,6 +7,7 @@ import isFunction from "lodash/isFunction";
 import debounce from "lodash/debounce";
 import { Menubar } from "primereact/menubar";
 import { PanelMenu } from "primereact/panelmenu";
+import { Dialog } from "primereact/dialog";
 
 import NavBuilder from "../utils/NavBuilder";
 import BalanceHeaderMenuItemTemplate from "./BalanceHeaderMenuItemTemplate";
@@ -20,11 +21,13 @@ class Navbar extends Component {
 		super(props);
 
 		const screenType = this.getScreenType();
+		const { userData } = props;
 
 		this.state = {
-			menuItems: NavBuilder.buildMenuItems(),
+			menuItems: NavBuilder.buildMenuItems(userData),
 			page: "mail",
 			screenType,
+			showSignIn: false,
 		};
 
 		this.resizeHandler = debounce(this.resizeHandler, 500);
@@ -32,6 +35,16 @@ class Navbar extends Component {
 
 	componentDidMount() {
 		window.addEventListener("resize", this.resizeHandler);
+	}
+
+	componentDidUpdate(prevProp) {
+		const { userData } = this.props;
+
+		if (prevProp.userData !== userData) {
+			this.setState({
+				menuItems: NavBuilder.buildMenuItems(userData),
+			});
+		}
 	}
 
 	/**
@@ -98,6 +111,8 @@ class Navbar extends Component {
 	};
 
 	buildDesktopModel = (left, right) => {
+		const { signIn } = this.props;
+
 		const rightMenuItems = right
 			.filter((rootItem) => rootItem)
 			.map((rootItem) => ({
@@ -111,12 +126,9 @@ class Navbar extends Component {
 					? rootItem.items.map((subItem) =>
 							subItem.id === "signInform"
 								? {
+										className: "sigin-in",
 										template: () => (
-											<SignIn
-												onSignInClick={
-													this.signInHandler
-												}
-											/>
+											<SignIn onSignInClick={signIn} />
 										),
 								  }
 								: subItem
@@ -274,33 +286,53 @@ class Navbar extends Component {
 	};
 
 	itemClickHandler = ({ item }) => {
-		if (item.id === "signOut") {
-			this.signOutHandler();
+		const { signIn, signOut } = this.props;
+		const { id } = item;
+
+		if (id === "signOut") {
+			signOut();
+		} else if (id === "signIn") {
+			this.setState({
+				showSignIn: true,
+			});
 		}
 	};
 
-	signInHandler = () => {
-		this.setState({
-			menuItems: NavBuilder.buildMenuItems(true),
-		});
-	};
+	signInHandler = (username) => {
+		const { signIn } = this.props;
 
-	signOutHandler = () => {
-		this.setState({
-			menuItems: NavBuilder.buildMenuItems(false),
-		});
+		this.setState(
+			{
+				showSignIn: false,
+			},
+			() => signIn(username)
+		);
 	};
 
 	render() {
-		const { screenType } = this.state;
+		const { signIn } = this.props;
+		const { screenType, showSignIn } = this.state;
 		const model = this.buildModel();
 
 		return (
-			<Menubar
-				className={`navbar ${screenType}`}
-				start={<div className='app-logo'></div>}
-				model={model}
-			/>
+			<>
+				<Menubar
+					className={`navbar ${screenType}`}
+					start={<div className='app-logo'></div>}
+					model={model}
+				/>
+
+				<Dialog
+					header='Sign In'
+					visible={showSignIn}
+					onHide={() => this.setState({ showSignIn: false })}
+					modal
+					dismissableMask>
+					<SignIn
+						class=''
+						onSignInClick={this.signInHandler}></SignIn>
+				</Dialog>
+			</>
 		);
 	}
 }

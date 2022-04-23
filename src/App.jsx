@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "primereact/resources/primereact.min.css"; //core css
 import "primeicons/primeicons.css"; //icons
@@ -9,6 +9,35 @@ import Navbar from "./components/Navbar";
 
 function App() {
 	const [count, setCount] = useState(0);
+	const [userData, setUserData] = useState(null);
+
+	const fetchUserData = (userName) => {
+		const dataPath = userName
+			? "../src/data/authenticated.json"
+			: "../src/data/visitor.json";
+
+		fetch(dataPath)
+			.then((resp) => resp.json())
+			.then((data) => setUserData(data))
+			.catch((err) => console.log(err));
+	};
+
+	const signIn = (username) => {
+		localStorage.setItem("helloVite", username);
+		fetchUserData(username);
+	};
+
+	const signOut = () => {
+		localStorage.removeItem("helloVite");
+		fetchUserData(null);
+	};
+
+	useEffect(() => {
+		// check localStorage for authentication state
+		const helloViteUsr = localStorage.getItem("helloVite");
+
+		fetchUserData(helloViteUsr);
+	}, []);
 
 	return (
 		<div className='App'>
@@ -42,7 +71,8 @@ function App() {
 					</a>
 				</p>
 			</header>
-			<Navbar />
+
+			<Navbar userData={userData} signIn={signIn} signOut={signOut} />
 		</div>
 	);
 }

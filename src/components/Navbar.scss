@@ -16,6 +16,12 @@
 		background-repeat: no-repeat;
 	}
 
+	&.phone {
+		.app-logo {
+			width: 120px;
+		}
+	}
+
 	.p-menuitem-text {
 		line-height: 30px;
 	}
@@ -62,6 +68,10 @@
 
 		.p-panelmenu-panel:not(:first-child) {
 			border-top: 1px solid rgba(255, 255, 255, 0.12);
+		}
+
+		.sigin-in {
+			padding: 0 1.25rem;
 		}
 	}
 
@@ -136,8 +146,12 @@
 		}
 
 		&.tablet {
-			> .p-menuitem-link .p-submenu-icon {
-				&.pi-angle-down {
+			> .p-menuitem-link {
+				.p-menuitem-icon {
+					line-height: 30px;
+				}
+
+				.p-submenu-icon.pi-angle-down {
 					display: none;
 				}
 			}
@@ -145,6 +159,10 @@
 
 		&.phone {
 			position: static;
+
+			.p-menuitem-icon {
+				line-height: 30px;
+			}
 
 			.p-submenu-list {
 				width: 100% !important;

@@ -1,8 +1,6 @@
 import isArray from "lodash/isArray";
 import isNumber from "lodash/isNumber";
 import isString from "lodash/isString";
-import authenticatedData from "../data/authenticated";
-import visitorData from "../data/visitor";
 
 const CurrencyFormatter = new Intl.NumberFormat("en-US", {
 	style: "currency",
@@ -15,8 +13,10 @@ class NavBuilder {
 	 *
 	 * @returns {object}
 	 */
-	static buildMenuItems(isAuth) {
-		const sessionData = isAuth ? authenticatedData : visitorData;
+	static buildMenuItems(sessionData) {
+		if (!sessionData) {
+			return {};
+		}
 
 		return {
 			mail: {
